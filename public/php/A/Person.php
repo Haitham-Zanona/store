@@ -1,10 +1,12 @@
 <?php
 
 namespace A;
-
+use B\Human;
+use Info;
 //define('AJYAL',true);
 const LARAVEL = 'Laravel A';
-class Person {
+class Person implements Human {
+    use Info;
 
     const MALE = 'm';
     const FEMALE = 'f';
@@ -22,15 +24,7 @@ class Person {
         echo __CLASS__;
 
     }
-    public function setAge($age){
-        $this->age = $age;
-        return $this;
-    }
-    //...
-    function setGender($gender){
-        $this->$gender;
-        return $this;
-    }
+
 
     public static function setCountry($country){
         self::$country = $country;

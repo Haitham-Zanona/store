@@ -2,9 +2,14 @@
 
 namespace B;
 
+use Info;
+
+use A\Person as PersonA;
+
 //define('AJYAL',true);
 const LARAVEL = 'Laravel B';
-class Person {
+class Person extends PersonA implements Human {
+    use Info;
 
     const MALE = 'm';
     const FEMALE = 'f';
@@ -21,15 +26,7 @@ class Person {
         */
         echo __CLASS__;
     }
-    public function setAge($age){
-        $this->age = $age;
-        return $this;
-    }
-    //...
-    function setGender($gender){
-        $this->$gender;
-        return $this;
-    }
+
 
     public static function setCountry($country){
         self::$country = $country;

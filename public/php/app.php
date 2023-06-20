@@ -1,11 +1,21 @@
 <?php
-include __DIR__ . '/A/Person.php';
-include __DIR__ . '/B/Person.php';
-$person = new A\Person;
-$person2 = new B\Person;
+
+include __DIR__ .'/autoload.php';
+
+/* include __DIR__ . '/A/Person.php';
+include __DIR__ . '/B/Person.php'; */
+
+
+$person = new \A\Person;
+$person2 = new \B\Person;
 
 $person->name = 'Mohamed';
 $person2->name = 'Ali';
+
+//We have to add namespace before calling this function because we are using an abstract class which has no implementation in PHP so its not available by default
+
+$person->setAge(10);
+$person2->setAge(16);
 ////////////////////////////////////////////////////////
 /*
 *  We can use :: when one of two parts is static
