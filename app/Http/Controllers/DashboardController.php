@@ -9,6 +9,6 @@ class DashboardController extends Controller
     //Actions
     public function index() {
         //Return response: view, json, redirect, file
-        return view('dashboard');
+        return view('dashboard.index');
     }
 }

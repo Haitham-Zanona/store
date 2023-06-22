@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/dashboard/index', [DashboardController::class, 'index']);
 
 //at Laravel -v  7 or less
 // Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index');
