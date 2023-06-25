@@ -1,0 +1,14 @@
+categories (id (PK), parent_id (FK), name, slug (UQ), ...)
+
+stores (id (PK), name, ....)
+
+products (id (PK), store_id (FK), category_id (FK), name, slug (UQ), description,
+price; ....)
+
+cart
+
+orders (id, number, user_id, status, product_id, qty)
+orders_items (order_id (FK), product_id, qty)
+
+1 20220001, 1, 1, 2
+2 20220001, 1, 2, 1
