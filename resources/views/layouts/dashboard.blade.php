@@ -17,11 +17,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href=" {{ asset('plugins/fontawesome-free/css/all.min.css') }} ">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('/resources/css/app.css') }}">
     @stack('styles')
 </head>
 
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
+<body class="hold-transition sidebar-mini" id="neon">
+
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -189,6 +191,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                         <div class="info">
                             <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                            <br>
+                            <form action="{{ route('logout') }}" method="POST">
+                                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
+                                {{-- {{ csrf_field() }} --}}
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-primary">Logout</button>
+                            </form>
+
                         </div>
                     </div>
                 @endauth
@@ -269,6 +279,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+
+    <script type="module" src="{{ asset('/resources/js/app.js') }}"></script>
+
     @stack('scripts')
 </body>
 
