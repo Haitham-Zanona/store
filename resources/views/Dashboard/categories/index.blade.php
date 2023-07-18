@@ -14,9 +14,14 @@
     <a href="{{ route('categories.create') }}" class="btn btn-sm btn-outline-primary">Create</a>
 </div>
 
-@if (session('success->has(success)'))
+@if (session()->has('success'))
     <div class="alert alert-success">
         {{ session('success') }}
+    </div>
+@endif
+@if (session()->has('info'))
+    <div class="alert alert-info">
+        {{ session('info') }}
     </div>
 @endif
 
@@ -28,7 +33,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Parent</th>
                 <th scope="col">Created At</th>
-                <th colspan="2" scope="col"></th>
+                <th colspan="2" scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +55,7 @@
                                 {{-- Form Method Spoofing --}}
                                 {{-- <input type="hidden" name="_method" value="delete"> --}}
                                 @method('delete')
-                                <button type="submit" class="btn btn-sm btn-outline-danger"></button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                             </form>
                         </td>
                     </tr>
