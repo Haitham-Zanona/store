@@ -17,7 +17,7 @@
 </div>
 <div class="form-group">
     <label for="">Image</label>
-    <input type="file" name="image" class="form-control form-select">
+    <input type="file" name="image" class="form-control form-select" accept="image/*">
     @if ($category->image)
         <img src="{{ asset('storage/' . $category->image) }}" alt="" height="50">
     @endif
@@ -40,5 +40,5 @@
     </div>
 </div>
 <div class="form-group">
-    <button type="submit" class="btn btn-primary mt-2 mb-3">Save</button>
+    <button type="submit" class="btn btn-primary mt-2 mb-3">{{ $button_label ?? 'Save' }}</button>
 </div>

@@ -56,14 +56,10 @@ class CategoriesController extends Controller
 
 
         $data = $request->except('image');
-        if ($request->hasFile('image')) {
-            $file = $request->file('image'); // UploadedFile Object
-            $path = $file->store('uploads', [
-                'disk' => 'public'
-            ]);
-            $data['image'] = $path;
 
-        }
+        $data['image'] = $this->uploadImage($request);
+
+
 
 
 
@@ -124,15 +120,16 @@ class CategoriesController extends Controller
         $old_image = $category->image;
 
         $data = $request->except('image');
+        $data['image'] = $this->uploadImage($request);
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image'); // UploadedFile Object
-            $path = $file->store('uploads', [
-                'disk' => 'public'
-            ]);
-            $data['image'] = $path;
 
-        }
+            /* $file->getClientOriginalName();
+            $file->getSize();
+            $file->getMimeType();
+            $file->getClientOriginalExtension(); */ // Use for validation
+
+
+
 
         // Manuel requests
 
@@ -146,7 +143,7 @@ class CategoriesController extends Controller
         $category->update($data);
         // $category->fill($request->all())->save();
 
-        if ($old_image && isset($data['image'])) {
+        if ($old_image && $data['image']) {
             Storage::disk('public')->delete($old_image);
         }
 
@@ -172,5 +169,17 @@ class CategoriesController extends Controller
 
         return Redirect::route("categories.index")
                 ->with('success', 'Category Deleted!');
+    }
+
+    protected function uploadImage(Request $request){
+        if (!$request()->hasFile('image')) {
+            return;
+        }
+            $file = request()->file('image');
+            $path = $file->store('uploads', [
+                'disk' => 'public'
+            ]);
+            return $path;
+}
     }
 }
