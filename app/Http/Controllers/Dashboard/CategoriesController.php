@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class CategoriesController extends Controller
 {
@@ -27,8 +28,9 @@ class CategoriesController extends Controller
     public function create()
     {
         $parents = Category::all();
+        $category = new Category();
 
-        return view('Dashboard.categories.create', compact('parents'));
+        return view('Dashboard.categories.create', compact('category','parents'));
     }
 
     /**
@@ -52,8 +54,21 @@ class CategoriesController extends Controller
             "slug" => Str::slug($request->post('name'))
         ]);
 
+
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image'); // UploadedFile Object
+            $path = $file->store('uploads', [
+                'disk' => 'public'
+            ]);
+            $data['image'] = $path;
+
+        }
+
+
+
         // Mass assignment
-        $category = Category::create($request->all());
+        $category = Category::create($data);
 
         // PRG
         return Redirect::route("categories.index")
@@ -91,7 +106,7 @@ class CategoriesController extends Controller
         * Select * FROM categories WHERE id <> $id
         * AND (parent_id IS NULL OR parent_id <> $id)
         */
-$parents = Category::where('id', '<>', $id)
+        $parents = Category::where('id', '<>', $id)
             ->where(function($query) use ($id) {
                 $query->whereNull('parent_id')
                       ->orWhere('parent_id', '<>', $id);
@@ -106,6 +121,19 @@ $parents = Category::where('id', '<>', $id)
     {
         $category = Category::findOrFail($id);
 
+        $old_image = $category->image;
+
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image'); // UploadedFile Object
+            $path = $file->store('uploads', [
+                'disk' => 'public'
+            ]);
+            $data['image'] = $path;
+
+        }
+
         // Manuel requests
 
         // $category->name = $request->name;
@@ -115,8 +143,12 @@ $parents = Category::where('id', '<>', $id)
         // .
         // $category->save();
 
-        $category->update($request->all());
+        $category->update($data);
         // $category->fill($request->all())->save();
+
+        if ($old_image && isset($data['image'])) {
+            Storage::disk('public')->delete($old_image);
+        }
 
         return Redirect::route("categories.index")
                 ->with('success', 'Category Updated!');
@@ -128,11 +160,15 @@ $parents = Category::where('id', '<>', $id)
      */
     public function destroy(string $id)
     {
-        // $category = Category::findOrFail($id);
-        // $category->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
 
         // Category::where('id', '=', $id)->delete(); //Nest method is a shortcut of this method
-        Category::destroy($id);
+        // Category::destroy($id);
 
         return Redirect::route("categories.index")
                 ->with('success', 'Category Deleted!');

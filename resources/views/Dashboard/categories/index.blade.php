@@ -28,7 +28,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th scope="col"></th>
+                <th scope="col">Image</th>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Parent</th>
@@ -39,7 +39,7 @@
         <tbody>
                 @forelse ($categories as $category)
                     <tr>
-                        <td></td>
+                        <td><img src="{{ asset('storage/' . $category->image) }}" alt="" height="50"></td>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->parent_id }}</td>
