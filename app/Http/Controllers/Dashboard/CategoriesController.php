@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use Exception;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +31,7 @@ class CategoriesController extends Controller
         $parents = Category::all();
         $category = new Category();
 
-        return view('Dashboard.categories.create', compact('category','parents'));
+        return view('Dashboard.categories.create', compact('category', 'parents'));
     }
 
     /**
@@ -48,6 +49,12 @@ class CategoriesController extends Controller
         // $request->all(); // Return array of all input data
         // $request->only(['name', 'parent_id']);
         // $request->except(['image', 'status']);
+
+
+        $clean_data = $request->validate(Category::rules(), [
+            'required' => 'This field (:attribute) is required',
+            'unique' => 'This name is already exists!', // you can use it for a specific field so write field name before unique like (name.unique)
+        ]);
 
         // Request merge
         $request->merge([
@@ -68,7 +75,7 @@ class CategoriesController extends Controller
 
         // PRG
         return Redirect::route("categories.index")
-                ->with('success', 'Category Created!');
+            ->with('success', 'Category Created!');
     }
 
     /**
@@ -99,13 +106,13 @@ class CategoriesController extends Controller
         } */
 
         /**
-        * Select * FROM categories WHERE id <> $id
-        * AND (parent_id IS NULL OR parent_id <> $id)
-        */
+         * Select * FROM categories WHERE id <> $id
+         * AND (parent_id IS NULL OR parent_id <> $id)
+         */
         $parents = Category::where('id', '<>', $id)
-            ->where(function($query) use ($id) {
+            ->where(function ($query) use ($id) {
                 $query->whereNull('parent_id')
-                      ->orWhere('parent_id', '<>', $id);
+                    ->orWhere('parent_id', '<>', $id);
             })->get();
         return view('Dashboard.categories.edit', compact('category', 'parents'));
     }
@@ -113,17 +120,32 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, $id)
     {
+        // $request->validate(Category::rules($id));
+
         $category = Category::findOrFail($id);
 
         $old_image = $category->image;
 
         $data = $request->except('image');
-        $data['image'] = $this->uploadImage($request);
+        $new_image = $this->uploadImage($request);
+        if($new_image){
+            $data['image'] = $new_image;
+        }
+
+        $category->update($data);
+        // $category->fill($request->all())->save();
+
+        if ($old_image && $new_image) {
+            Storage::disk('public')->delete($old_image);
+        }
+
+        return Redirect::route("categories.index")
+            ->with('success', 'Category Updated!');
 
 
-            /* $file->getClientOriginalName();
+        /* $file->getClientOriginalName();
             $file->getSize();
             $file->getMimeType();
             $file->getClientOriginalExtension(); */ // Use for validation
@@ -140,15 +162,6 @@ class CategoriesController extends Controller
         // .
         // $category->save();
 
-        $category->update($data);
-        // $category->fill($request->all())->save();
-
-        if ($old_image && $data['image']) {
-            Storage::disk('public')->delete($old_image);
-        }
-
-        return Redirect::route("categories.index")
-                ->with('success', 'Category Updated!');
 
     }
 
@@ -168,18 +181,18 @@ class CategoriesController extends Controller
         // Category::destroy($id);
 
         return Redirect::route("categories.index")
-                ->with('success', 'Category Deleted!');
+            ->with('success', 'Category Deleted!');
     }
 
-    protected function uploadImage(Request $request){
-        if (!$request()->hasFile('image')) {
+    protected function uploadImage(Request $request)
+    {
+        if (!$request->hasFile('image')) {
             return;
         }
-            $file = request()->file('image');
-            $path = $file->store('uploads', [
-                'disk' => 'public'
-            ]);
-            return $path;
-}
+        $file = request()->file('image');
+        $path = $file->store('uploads', [
+            'disk' => 'public'
+        ]);
+        return $path;
     }
 }
