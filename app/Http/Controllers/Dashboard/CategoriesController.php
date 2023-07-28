@@ -18,7 +18,23 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();  // Return collection object
+
+        $request = request();
+        $query = Category::query();
+
+        if ($name = $request->query('name')) {
+            $query->where('name', 'LIKE', "%{name}%");
+        }
+        if ($status = $request->query('status')) {
+            // $query->where('status', '=', $status);
+            $query->whereStatus($status);
+        }
+
+        // $categories = Category::all();  // Return collection object
+
+        $categories = $query->paginate(2); //Maximum 15 records return and you can put any number under 15 between () to control the number
+
+        // $categories = Category::simplePaginate(2); //using previous and next not number of record's pages
 
         return view('Dashboard.categories.index', compact('categories'));
     }

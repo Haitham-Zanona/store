@@ -10,7 +10,7 @@
         @checked(old($name, $checked) == $value)
         {{ $attributes->class([
             'form-check-input',
-            'is-invalid' => $errors->has($name)
+            'is-invalid' => $errors->has($name),
         ]) }}
     >
     <label class="form-check-label">

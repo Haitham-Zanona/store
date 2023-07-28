@@ -4,18 +4,21 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 
 class Nav extends Component
 {
 
     public $items;
+    public $active;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($context = 'side')
     {
         $this->items = config('nav');
+        $this->active = Route::currentRouteName();
     }
 
     /**
