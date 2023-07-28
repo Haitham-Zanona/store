@@ -13,17 +13,8 @@
 @endif
 
 <div class="form-group">
-    <label for="">Category Name</label>
-    <input type="text" name="name" @class([
-        'form-control',
-        'form-select',
-        'is-invalid' => $errors->has('name')
-        ]) value="{{ old('name', $category->name) }}">
-    @error('name')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-    @enderror
+
+<x-form.input label="Category Name" class="form-control-lg" role="input" name="name" :value="$category->name" />
 </div>
 <div class="form-group">
     <label for="">Category Parent</label>
@@ -36,30 +27,19 @@
 </div>
 <div class="form-group">
     <label for="">Description</label>
-    <textarea name="description" class="form-control form-select">{{ old('description', $category->description) }}</textarea>
+    <x-form.textarea name="description" :value="$category->description"/>
 </div>
 <div class="form-group">
-    <label for="">Image</label>
-    <input type="file" name="image" class="form-control form-select" accept="image/*">
+    <x-form.label id="image">Image</x-form.label>
+    <x-form.input type="file" name="image" accept="image/*" />
     @if ($category->image)
         <img src="{{ asset('storage/' . $category->image) }}" alt="" height="50">
     @endif
 </div>
 <div class="form-group">
     <label for="">Status</label>
-    <div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" value="active" @checked(old('status', $category->status) == 'active')>
-            <label class="form-check-label" for="flexRadioDefault1">
-                Active
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" value="archived" @checked(old('status', $category->status) == 'archived')>
-            <label class="form-check-label">
-                Archived
-            </label>
-        </div>
+    <div class="ml-3">
+        <x-form.radio name="status" :checked="$category->status" :options="['active' => 'Active', 'archived' => 'Archived']" />
     </div>
 </div>
 <div class="form-group">
