@@ -42,7 +42,7 @@ class Category extends Model
             'image' => [
                 'max:1048576', 'dimensions:min_width=100,min_height=100'
             ],
-            'status' => 'required|in:active,achived'
+            'status' => 'required|in:active,archived'
         ];
     }
 

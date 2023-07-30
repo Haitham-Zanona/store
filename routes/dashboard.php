@@ -6,7 +6,7 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 
 Route::group([
     'middleware' => ['auth', 'verified'],
-    'as' => 'dashboard.',
+    // 'as' => 'dashboard.',
     'prefix' => 'dashboard'
 ], function(){
     Route::get('/', [DashboardController::class, 'index'])

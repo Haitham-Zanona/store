@@ -19,11 +19,12 @@ class CategoriesController extends Controller
     public function index()
     {
 
+        /* Filter code */
         $request = request();
         $query = Category::query();
 
         if ($name = $request->query('name')) {
-            $query->where('name', 'LIKE', "%{name}%");
+            $query->where('name', 'LIKE', "%{$name}%");
         }
         if ($status = $request->query('status')) {
             // $query->where('status', '=', $status);
