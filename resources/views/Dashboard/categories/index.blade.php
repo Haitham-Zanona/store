@@ -47,7 +47,7 @@
                         <td><img src="{{ asset('storage/' . $category->image) }}" alt="" height="50"></td>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
-                        <td>{{ $category->parent_id }}</td>
+                        <td>{{ $category->parent_name }}</td>
                         <td>{{ $category->status }}</td>
                         <td>{{ $category->created_at }}</td>
                         <td>
@@ -67,7 +67,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center">No categories found!</td>
+                        <td colspan="8" class="text-center">No categories found!</td>
                     </tr>
                 @endforelse
         </tbody>

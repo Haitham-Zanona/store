@@ -21,21 +21,27 @@ class CategoriesController extends Controller
 
         /* Filter code */
         $request = request();
-        $query = Category::query();
 
-        if ($name = $request->query('name')) {
-            $query->where('name', 'LIKE', "%{$name}%");
-        }
-        if ($status = $request->query('status')) {
-            // $query->where('status', '=', $status);
-            $query->whereStatus($status);
-        }
+        // SELECT a.*, b.name FROM categories as a
+        // LEFT JOIN categories as b ON b.id = a.parent_id
+
+        $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
+            ->select([
+                'categories.*',
+                'parents.name as parent_name'
+            ])
+            ->filter($request->query())
+            ->orderBy('categories.name')
+            ->paginate(3);
 
         // $categories = Category::all();  // Return collection object
 
-        $categories = $query->paginate(2); //Maximum 15 records return and you can put any number under 15 between () to control the number
+        // $categories = $query->paginate(2); //Maximum 15 records return and you can put any number under 15 between () to control the number
 
         // $categories = Category::simplePaginate(2); //using previous and next not number of record's pages
+
+        // $categories = Category::active()->paginate();
+        // $categories = Category::status('active')->paginate();
 
         return view('Dashboard.categories.index', compact('categories'));
     }
