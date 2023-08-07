@@ -25,5 +25,5 @@ class Store extends Model
 
     public $incrementing = true;
 
-    public $timestamps = true;
+    public $timestamps = false;
 }

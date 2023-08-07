@@ -19,7 +19,7 @@ class Category extends Model
         'image',
         'parent_id',
         'status',
-        'slug'
+        'slug',
     ];
 
     public function scopeActive(Builder $builder){
@@ -72,4 +72,6 @@ class Category extends Model
     /* protected $guarded= [
         'id'
     ]; */
+
+    public $timestamps = false;
 }
