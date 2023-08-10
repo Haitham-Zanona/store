@@ -38,6 +38,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Parent</th>
+                <th scope="col">Products #</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created At</th>
                 <th colspan="2" scope="col">Actions</th>
@@ -48,8 +49,9 @@
                     <tr>
                         <td><img src="{{ asset('storage/' . $category->image) }}" alt="" height="50"></td>
                         <td>{{ $category->id }}</td>
-                        <td>{{ $category->name }}</td>
-                        <td>{{ $category->parent_name }}</td>
+                        <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a></td>
+                        <td>{{ $category->parent->name}}</td>
+                        <td>{{ $category->products_count }}</td>
                         <td>{{ $category->status }}</td>
                         <td>{{ $category->created_at }}</td>
                         <td>
@@ -69,7 +71,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">No categories found!</td>
+                        <td colspan="9" class="text-center">No categories found!</td>
                     </tr>
                 @endforelse
         </tbody>

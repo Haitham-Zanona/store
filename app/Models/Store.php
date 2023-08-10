@@ -26,4 +26,8 @@ class Store extends Model
     public $incrementing = true;
 
     public $timestamps = false;
+
+    public function products(){
+        return $this->hasMany(Product::class, 'store_id', 'id');
+    }
 }

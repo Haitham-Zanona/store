@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,15 +26,25 @@ class CategoriesController extends Controller
         // SELECT a.*, b.name FROM categories as a
         // LEFT JOIN categories as b ON b.id = a.parent_id
 
-        $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
+        $categories = Category::with('parent')
+            /* leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
             ->select([
                 'categories.*',
                 'parents.name as parent_name'
+            ]) */
+            //->select('categories.*')
+            //->selectRaw('(SELECT COUNT(*) FROM products WHERE AND status = 'active' AND category_id = categories.id) as products_count')
+            //->addSelect(DB::raw('(SELECT COUNT(*) FROM products WHERE category_id = categories.id) as products_count'))
+            //->withCount('products')
+            //->withCount('products as products_number')    When you have different column name of products_count
+            ->withCount([
+                'products'=>function ($query){
+                    $query->where('status','=', 'active');}
             ])
             ->filter($request->query())
             ->orderBy('categories.name')
             ->withTrashed()
-            ->paginate(3);
+            ->paginate(10);
 
         // $categories = Category::all();  // Return collection object
 
@@ -105,9 +116,11 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $category)
     {
-        //
+        return view('dashboard.categories.show', [
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -154,7 +167,7 @@ class CategoriesController extends Controller
 
         $data = $request->except('image');
         $new_image = $this->uploadImage($request);
-        if($new_image){
+        if ($new_image) {
             $data['image'] = $new_image;
         }
 
@@ -220,18 +233,21 @@ class CategoriesController extends Controller
         return $path;
     }
 
-    public function trash(){
+    public function trash()
+    {
         $categories = Category::onlyTrashed()->paginate();
         return view('dashboard.categories.trash', compact('categories'));
     }
-    public function restore(Request $request, $id){
+    public function restore(Request $request, $id)
+    {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->restore();
 
         return redirect()->route('categories.trash')
             ->with('success', 'Category restored!');
     }
-    public function forceDelete($id){
+    public function forceDelete($id)
+    {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
 

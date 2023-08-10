@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class ProductsController extends Controller
 {
@@ -13,7 +14,17 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::with(['category', 'store'])->paginate();
+        // SELECT * FROM products
+        // SELECT * FROM categories WHERE id IN (..)
+        // SELECT * FROM stores WHERE id IN (..)
+
+       /*  $category = Category::with('products')->find(1);
+        $products = $category->products; //Product::where('category', '=', $category->id)->get();
+        foreach ($category->products as $product) {
+            echo $product->name;
+        } */
+
         return View('dashboard.products.index', compact('products'));
     }
 

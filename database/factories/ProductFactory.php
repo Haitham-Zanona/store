@@ -19,7 +19,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->productName(3, true);
+        $name = $this->faker->productName(5, true);
 
         return [
             'name' => $name,
