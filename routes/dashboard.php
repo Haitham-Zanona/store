@@ -1,15 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\CategoriesController;
 
 Route::group([
     'middleware' => ['auth', 'verified'],
     // 'as' => 'dashboard.',
     'prefix' => 'dashboard'
 ], function () {
+
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::get('/', [DashboardController::class, 'index'])
         ->name('dashboard');
 
