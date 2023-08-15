@@ -16,13 +16,13 @@ return [
     ],
     [
         'icon' => 'far fa-circle nav-icon',
-        'route' => 'categories.index',
+        'route' => 'products.index',
         'title' => 'Orders',
         'active' => 'orders.*',
     ],
     [
         'icon' => 'far fa-circle nav-icon',
-        'route' => 'categories.index',
+        'route' => 'products.index',
         'title' => 'Products',
         'active' => 'Products.*',
     ],
