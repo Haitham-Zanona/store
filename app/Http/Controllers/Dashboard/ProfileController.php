@@ -13,7 +13,7 @@ class ProfileController extends Controller
 {
     public function edit(){
         $user = Auth::user();
-        return view('products.edit', [
+        return view('dashboard.profile.edit', [
             'user' => $user,
             'countries' => Countries::getNames(),
             'locales' => Languages::getNames(),

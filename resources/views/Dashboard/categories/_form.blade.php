@@ -38,7 +38,7 @@
 </div>
 <div class="form-group">
     <label for="">Status</label>
-    <div class="ml-3">
+    <div>
         <x-form.radio name="status" :checked="$category->status" :options="['active' => 'Active', 'archived' => 'Archived']" />
     </div>
 </div>

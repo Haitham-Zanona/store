@@ -13,7 +13,7 @@
 <x-alert type="success" />
 
     <!-- Main content -->
-    <form action="{{ route('profile.update', $category->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -31,6 +31,7 @@
                 <x-form.input name="birthday" type="date" label="Birthday" :value="$user->profile->birthday" />
             </div><!-- birthday -->
             <div class="col-md-6">
+                <label for="">Gender</label>
                 <x-form.radio name="gender" label="Gender" :options="['male' => 'Male', 'female' => 'Female']" :checked="$user->profile->gender" />
             </div><!-- gender -->
         </div><!-- form-row -->
@@ -59,7 +60,7 @@
             </div><!-- locale -->
         </div><!-- form-row -->
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
     </form>
 
 @endsection
