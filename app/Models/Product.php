@@ -13,6 +13,21 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable= [
+        'name',
+        'description',
+        'image',
+        'store_id',
+        'category_id',
+        'price',
+        'compare_price',
+        'options',
+        'rating',
+        'featured',
+        'status',
+        'slug',
+    ];
+
     protected static function booted()
     {
         static::addGlobalScope('store', new StoreScope());
@@ -36,20 +51,7 @@ class Product extends Model
         );
     }
 
-    protected $fillable= [
-        'name',
-        'description',
-        'image',
-        'store_id',
-        'category_id',
-        'price',
-        'compare_price',
-        'options',
-        'rating',
-        'featured',
-        'status',
-        'slug',
-    ];
+
 
     public $timestamps = false;
 }
