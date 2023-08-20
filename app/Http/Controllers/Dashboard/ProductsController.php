@@ -75,14 +75,17 @@ class ProductsController extends Controller
     {
         $product->update($request->except('tags'));
 
-        $tags = explode(',', $request->post('tags'));
+        $tags = json_decode($request->post('tags'));
         $tag_ids = [];
-        foreach ($tags as  $t_name){
-            $slug = Str::slug($t_name);
-            $tag = Tag::where('slug', $slug)->first();
+
+        $saved_tags = Tag::all();
+
+        foreach ($tags as  $item){
+            $slug = Str::slug($item->value);
+            $tag = $saved_tags->where('slug', $slug)->first();
             if (!$tag) {
                 $tag = Tag::create([
-                    'name' => $t_name,
+                    'name' => $item->value,
                     'slug'=>$slug,
                 ]);
             }
