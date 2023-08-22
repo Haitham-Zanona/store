@@ -6,8 +6,9 @@ use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 
+
 Route::group([
-    'middleware' => ['auth', 'verified'],
+    'middleware' => ['auth', 'auth.type:admin,super-admin', 'verified'],
     // 'as' => 'dashboard.',
     'prefix' => 'dashboard'
 ], function () {
