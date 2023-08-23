@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\front\ProductController;
 
@@ -25,6 +26,8 @@ Route::get('/products', [ProductController::class, 'index'])
 
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])
     ->name('product.show');
+
+Route::resource('cart', CartController::class);
 
 Route::get('/test', function() {
     return view('test');
