@@ -48,6 +48,11 @@ class CartController extends Controller
         $product = Product::findOrFail($request->post('product_id'));
         $this->cart->add($product, $request->post('quantity'));
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Item added to cart!',
+            ], 201);
+        }
         return redirect()->route('cart.index')
             ->with('success', 'Product added to cart!');
     }
@@ -55,15 +60,13 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'product_id' => ['required', 'int', 'exists:products,id'],
             'quantity'   => ['required','int', 'min:1'],
         ]);
 
-        $product = Product::findOrFail($request->post('product_id'));
-        $this->cart->update($product, $request->post('quantity'));
+        $this->cart->update($id, $request->post('quantity'));
     }
 
     /**
@@ -72,5 +75,8 @@ class CartController extends Controller
     public function destroy($id)
     {
         $this->cart->delete($id);
+        return [
+            'message' => 'Item Deleted!',
+        ];
     }
 }

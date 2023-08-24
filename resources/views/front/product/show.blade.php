@@ -105,8 +105,8 @@
                                     <div class="row align-items-end">
                                         <div class="col-lg-4 col-md-4 col-12">
                                             <div class="button cart-button">
-                                                <button class="btn" type="submit" style="width: 100%;">Add to
-                                                    Cart</button>
+                                                <button class="btn add-to-cart" type="submit" style="width: 100%;">Add
+                                                    to Cart</button>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-12">
@@ -353,6 +353,7 @@
 
 
     @push('scripts')
+        <script src="{{ asset('build/assets/cart-7c6d15a2.js') }}"></script>
         <script type="text/javascript">
             const current = document.getElementById("current");
             const opacity = 0.6;
@@ -372,4 +373,5 @@
             });
         </script>
     @endpush
+    @vite('build/assets/cart-7c6d15a2.js')
 </x-front-layout>
