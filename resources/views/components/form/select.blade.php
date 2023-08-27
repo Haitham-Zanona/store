@@ -13,7 +13,7 @@
 >
 
     @foreach($options as $value => $text)
-        <option value="{{ $value }}" @selected($value == $selected)>{{ $text }}</option>
+        <option value="{{ $value }}" @selected($value == $selected) >{{ $text }}</option>
     @endforeach
 </select>
 

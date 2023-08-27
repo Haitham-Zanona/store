@@ -51,38 +51,40 @@
                 </div>
                 <!-- End Cart List Title -->
                 @foreach ($cart->get() as $item)
-                <!-- Cart Single List list -->
-                <div class="cart-single-list" id="{{ $item->id }}">
-                    <div class="row align-items-center">
-                        <div class="col-lg-1 col-md-1 col-12">
-                            <a href="{{ route('products.show', $item->product->slug) }}">
-                                <img src="{{ $item->product->image_url }}"alt="#"></a>
-                        </div>
-                        <div class="col-lg-4 col-md-3 col-12">
-                            <h5 class="product-name"><a href="{{ route('products.show', $item->product->slug) }}">
-                                    {{ $item->product->name }}</a></h5>
-                            <p class="product-des">
-                                <span><em>Type:</em> Mirrorless</span>
-                                <span><em>Color:</em> Black</span>
-                            </p>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-12">
-                            <div class="count-input">
-                                <input class="form-control item-quantity" data-id="{{ $item->id  }}" value="{{ $item->quantity }}">
+                    <!-- Cart Single List list -->
+                    <div class="cart-single-list" id="{{ $item->id }}">
+                        <div class="row align-items-center">
+                            <div class="col-lg-1 col-md-1 col-12">
+                                <a href="{{ route('product.show', $item->product->slug) }}">
+                                    <img src="{{ $item->product->image_url }}"alt="#"></a>
+                            </div>
+                            <div class="col-lg-4 col-md-3 col-12">
+                                <h5 class="product-name"><a href="{{ route('product.show', $item->product->slug) }}">
+                                        {{ $item->product->name }}</a></h5>
+                                <p class="product-des">
+                                    <span><em>Type:</em> Mirrorless</span>
+                                    <span><em>Color:</em> Black</span>
+                                </p>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-12">
+                                <div class="count-input">
+                                    <input class="form-control item-quantity" data-id="{{ $item->id }}"
+                                        value="{{ $item->quantity }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-12">
+                                <p>{{ Currency::format($item->quantity * $item->product->price) }}</p>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-12">
+                                <p>{{ Currency::format(0) }}</p>
+                            </div>
+                            <div class="col-lg-1 col-md-2 col-12">
+                                <a class="remove-item" data-id="{{ $item->id }}" href="javascript:void(0)"><i
+                                        class="lni lni-close"></i></a>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-12">
-                            <p>{{ Currency::format($item->quantity * $item->product->price) }}</p>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-12">
-                            <p>{{ Currency::format(0) }}</p>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-12">
-                            <a class="remove-item" data-id="{{ $item->id }}" href="javascript:void(0)"><i class="lni lni-close"></i></a>
-                        </div>
                     </div>
-                </div>
-                <!-- End Single List list -->
+                    <!-- End Single List list -->
                 @endforeach
             </div>
             <div class="row">
@@ -126,12 +128,11 @@
     <!--/ End Shopping Cart -->
 
     @push('scripts')
-    <script>
-        const csrf_token = "{{ csrf_token() }}";
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="{{ asset('build/assets/cart-7c6d15a2.js') }}"></script>
+        <script>
+            const csrf_token = "{{ csrf_token() }}";
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="{{ asset('build/assets/cart-e8cd9c22.js') }}"></script>
     @endpush
 
-    @vite('build/assets/cart-7c6d15a2.js')
 </x-front-layout>

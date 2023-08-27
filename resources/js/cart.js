@@ -28,6 +28,9 @@
 
     $('.add-to-cart').on('click', function (e) {
 
+        e.preventDefault();
+        alert('Product Added');
+
         $.ajax({
             url: "/cart/", //data-id
             method: 'post',
@@ -41,5 +44,6 @@
             }
         });
     });
+
 
 })(jQuery);

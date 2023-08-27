@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\front\ProductController;
+use App\Http\Controllers\Front\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +23,15 @@ Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
 Route::get('/products', [ProductController::class, 'index'])
-    ->name('products.index');
+    ->name('product.index');
 
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])
     ->name('product.show');
 
 Route::resource('cart', CartController::class);
+
+Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
+Route::post('checkout', [CheckoutController::class, 'store']);
 
 Route::get('/test', function() {
     return view('test');

@@ -353,8 +353,7 @@
 
 
     @push('scripts')
-        <script src="{{ asset('build/assets/cart-7c6d15a2.js') }}"></script>
-        <script type="text/javascript">
+            <script type="text/javascript">
             const current = document.getElementById("current");
             const opacity = 0.6;
             const imgs = document.querySelectorAll(".img");
@@ -373,5 +372,4 @@
             });
         </script>
     @endpush
-    @vite('build/assets/cart-7c6d15a2.js')
 </x-front-layout>
