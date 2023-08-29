@@ -26,24 +26,24 @@
         });
     });
 
-    $('.add-to-cart').on('click', function (e) {
+    /* $('.add-to-cart').on('click', function (e) {
 
         e.preventDefault();
-        alert('Product Added');
 
         $.ajax({
             url: "/cart/", //data-id
             method: 'post',
             data: {
-                product_id: $(this).data(id),
-                quantity: $(this).data('quantity'),
                 _token: csrf_token,
+                product_id: $(this).data('id'),
+                quantity: $(this).data('quantity'),
+
             },
             success: response => {
                 alert('Product Added')
             }
         });
-    });
+    }); */
 
 
 })(jQuery);
