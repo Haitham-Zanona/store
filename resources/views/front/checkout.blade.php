@@ -107,10 +107,9 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>Country</label>
                                                     <div class="form-input form">
                                                         <x-form.select name="addr[billing][country]"
-                                                            :options="$countries" label="Country"  />
+                                                            :options="$countries" label="Country" :selected='null' />
                                                     </div>
                                                 </div>
                                             </div>
@@ -208,10 +207,53 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>Country</label>
                                                     <div class="form-input form">
                                                         <x-form.select name="addr[shipping][country]"
-                                                            :options="$countries" label="Country" />
+                                                            :options="$countries" label="Country" :selected='null' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="checkout-payment-option">
+                                                    <h6 class="heading-6 font-weight-400 payment-title">Select Delivery
+                                                        Option</h6>
+                                                    <div class="payment-option-wrapper">
+                                                        <div class="single-payment-option">
+                                                            <input type="radio" name="shipping" checked id="shipping-1">
+                                                            <label for="shipping-1">
+                                                                <img src="https://via.placeholder.com/60x32"
+                                                                    alt="Sipping">
+                                                                <p>Standerd Shipping</p>
+                                                                <span class="price">$10.50</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="single-payment-option">
+                                                            <input type="radio" name="shipping" id="shipping-2">
+                                                            <label for="shipping-2">
+                                                                <img src="https://via.placeholder.com/60x32"
+                                                                    alt="Sipping">
+                                                                <p>Standerd Shipping</p>
+                                                                <span class="price">$10.50</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="single-payment-option">
+                                                            <input type="radio" name="shipping" id="shipping-3">
+                                                            <label for="shipping-3">
+                                                                <img src="https://via.placeholder.com/60x32"
+                                                                    alt="Sipping">
+                                                                <p>Standerd Shipping</p>
+                                                                <span class="price">$10.50</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="single-payment-option">
+                                                            <input type="radio" name="shipping" id="shipping-4">
+                                                            <label for="shipping-4">
+                                                                <img src="https://via.placeholder.com/60x32"
+                                                                    alt="Sipping">
+                                                                <p>Standerd Shipping</p>
+                                                                <span class="price">$10.50</span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

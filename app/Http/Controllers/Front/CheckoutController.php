@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\OrderAddress;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Cart\CartRepository;
 use Symfony\Component\Intl\Countries;
@@ -27,11 +28,14 @@ class CheckoutController extends Controller
 
     public function store(Request $request, CartRepository $cart)
     {
+
         $request->validate([
 
         ]);
 
+
         $items = $cart->get()->groupBy('product.store_id')->all();
+
 
 
         DB::beginTransaction();
@@ -55,6 +59,7 @@ class CheckoutController extends Controller
                 }
 
                 foreach ($request->post('addr') as $type  => $address) {
+
                     $address['type'] = $type;
                     $order->addresses()->create($address);
                 }
