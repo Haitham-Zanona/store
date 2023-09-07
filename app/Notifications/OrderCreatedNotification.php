@@ -6,11 +6,12 @@ use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 
 class OrderCreatedNotification extends Notification
 {
-    use Queueable;
+    use Queueable, Notifiable;
 
     protected $order;
 
