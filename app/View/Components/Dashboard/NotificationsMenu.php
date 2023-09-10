@@ -4,11 +4,13 @@ namespace App\View\Components\Dashboard;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class NotificationMenu extends Component
+class NotificationsMenu extends Component
 {
+    use Notifiable;
 
     public $notifications;
     public $newCount;

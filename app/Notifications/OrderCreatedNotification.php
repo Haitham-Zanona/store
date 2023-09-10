@@ -31,9 +31,8 @@ class OrderCreatedNotification extends Notification
     public function via($notifiable)
     {
         return ['mail', 'database'];
-
-        $channels = ['database'];
-
+        // If you want to check the channel before you can write this code
+        /* $channels = ['database'];
         if ($notifiable->notification_preferences['order_created']['sms'] ?? false) {
             $channels[] = 'vonage';
         }
@@ -43,8 +42,7 @@ class OrderCreatedNotification extends Notification
         if ($notifiable->notification_preferences['order_created']['broadcast'] ?? false) {
             $channels[] = 'broadcast';
         }
-
-        return $channels;
+        return $channels; */
     }
 
     /**
