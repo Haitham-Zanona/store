@@ -36,7 +36,7 @@ class DeductProductQuantity
                 ]); */
             }
         } catch (\Throwable $e) {
-            //throw $th;
+            //throw $e;
         }
     }
 }
