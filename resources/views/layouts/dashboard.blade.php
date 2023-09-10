@@ -18,8 +18,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('/resources/css/app.css') }}">
     @stack('styles')
+    @vite(['resources/css/app.css'])
 </head>
 
 <body class="hold-transition sidebar-mini" id="neon">
@@ -129,7 +129,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </li>
                 <!-- Notifications Dropdown Menu -->
-                <x-dashboard.notifications-menu count="7" />
+                {{-- <x-dashboard.notifications-menu count="7" /> --}}
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
@@ -256,9 +256,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 
-    <script type="module" src="{{ asset('/resources/js/app.js') }}"></script>
-
+    <script>
+        const userID = "{{ Auth::id() }}"
+    </script>
     @stack('scripts')
+    @vite(['resources/js/cart.js', 'resources/js/app.js', 'resources/js/bootstrap.js'])
 </body>
 
 </html>
