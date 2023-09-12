@@ -10,8 +10,6 @@ use Illuminate\View\Component;
 
 class NotificationsMenu extends Component
 {
-    use Notifiable;
-
     public $notifications;
     public $newCount;
     /**
