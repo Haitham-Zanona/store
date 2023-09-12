@@ -8,9 +8,9 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 
 
 Route::group([
-    'middleware' => ['auth', 'auth.type:admin,super-admin', 'verified'],
+    'middleware' => ['auth:admin', 'verified'],
     // 'as' => 'dashboard.',
-    'prefix' => 'dashboard'
+    'prefix' => 'admin/dashboard'
 ], function () {
 
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
