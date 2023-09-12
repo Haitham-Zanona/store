@@ -15,6 +15,6 @@
             </a>
             <div class="dropdown-divider"></div>
         @endforeach
-        <a href="{{ $notification->data['url'] }}" class="dropdown-item dropdown-footer">See All Notifications</a>
+        {{-- <a href="{{ $notification->data['url'] }}" class="dropdown-item dropdown-footer">See All Notifications</a> --}}
     </div>
 </li>
