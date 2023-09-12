@@ -19,6 +19,8 @@
     },
     "dependencies": {
         "gsap": "^3.12.2",
+        "laravel-echo": "^1.15.3",
+        "pusher-js": "^8.3.0",
         "three": "^0.154.0"
     }
 }

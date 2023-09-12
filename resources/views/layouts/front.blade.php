@@ -456,8 +456,9 @@
     <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     @stack('scripts')
-    @vite(['resources/js/cart.js'])
+    @vite(['resources/js/cart.js', 'resources/js/app.js', 'resources/js/bootstrap.js'])
 </body>
 
 </html>
