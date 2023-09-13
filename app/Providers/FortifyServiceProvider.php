@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Actions\Fortify\AuthenticateUser;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use App\Actions\Fortify\CreateNewUser;
@@ -62,6 +63,8 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+
+
         RateLimiter::for('login', function ($request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 
@@ -73,7 +76,8 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         // If you have view file's with there default name you can just use this way to define them all
-        if (Config::get('fortify.guard' == 'admin')) {
+        if (Config::get('fortify.guard') == 'admin') {
+            Fortify::authenticateUsing([new AuthenticateUser, 'authenticate']);
             Fortify::viewPrefix('auth.');
         } else {
             Fortify::viewPrefix('front.auth.');
