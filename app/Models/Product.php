@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Tag;
 use App\Models\Store;
-use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Models\Scopes\StoreScope;

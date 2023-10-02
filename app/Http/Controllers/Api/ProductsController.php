@@ -6,10 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class ProductsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -35,6 +39,12 @@ class ProductsController extends Controller
             'price' => 'required|numeric|min:0',
             'compare_price' => 'nullable|numeric|gt:price',
         ]);
+
+        $user = $request->user();
+        if (!$user->tokenCan('products.update')) {
+            abort(403, 'Not Allowed');
+        }
+
         $product = Product::create($request->all());
 
         return Response::json($product, 201, [
@@ -48,8 +58,8 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
         return new ProductResource($product);
-        return $product
-            ->load('category:id,name', 'store:id,name', 'tags:id,name');
+        /* return $product
+            ->load('category:id,name', 'store:id,name', 'tags:id,name'); */
         // return Product::findOrFail($id);
     }
 
@@ -68,6 +78,12 @@ class ProductsController extends Controller
             'price' => 'sometimes|required|numeric|min:0',
             'compare_price' => 'nullable|numeric|gt:price',
         ]);
+
+        $user = $request->user();
+        if (!$user->tokenCan('products.create')) {
+            abort(403, 'Not Allowed');
+        }
+
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
@@ -81,6 +97,13 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (!$user->tokenCan('products.delete')) {
+            return response([
+                "message" => 'You don\'t have access to delete this product',
+            ], 403);
+        }
+
         Product::destroy($id);
 
         return response()->json([

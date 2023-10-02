@@ -23,7 +23,7 @@ use App\Http\Controllers\Front\CheckoutController;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-Route::get('/products', [ProductController::class, 'index'])
+Route::get('/product', [ProductController::class, 'index'])
     ->name('product.index');
 
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])
