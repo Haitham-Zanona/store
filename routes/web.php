@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\front\ProductController;
 use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\Front\currencyConverterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,8 @@ Route::post('checkout', [CheckoutController::class, 'store']);
 Route::get('auth/user/2fa', [TwoFactorAuthenticationController::class, 'index'])
     ->name('front.2fa');
 
+Route::post('currency', [CurrencyConverterController::class, 'store'])
+    ->name('currency.store');
 Route::get('/test', function() {
     return view('test');
 });

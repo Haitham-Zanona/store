@@ -72,7 +72,7 @@ return [
 
     'timezone' => 'Asia/Gaza',
 
-    'currency' => 'EUR',
+    'currency' => 'USD',
 
     'api_token' => env('API_TOKEN'),
 
