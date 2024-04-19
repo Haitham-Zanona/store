@@ -7,6 +7,9 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Crypt;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+
         JsonResource::withoutWrapping();
 
         Validator::extend('filter', function($attribute, $value, $params){
