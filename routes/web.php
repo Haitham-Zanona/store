@@ -9,6 +9,7 @@ use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\front\ProductController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\currencyConverterController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,8 @@ use App\Http\Controllers\Front\currencyConverterController;
 */
 
 Route::group([
-    'prefix' => '{locale}',
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
 ], function () {
 
     Route::get('/', [HomeController::class, 'index'])

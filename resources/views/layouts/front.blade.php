@@ -66,12 +66,9 @@
                                 <div class="select-position">
                                     <form action="{{ URL::current() }}" method="get">
                                         <select name="locale" onchange="this.form.submit()">
-                                            <option value="en" selected>English</option>
-                                            <option value="es">Español</option>
-                                            <option value="fr">Français</option>
-                                            <option value="ar">العربية</option>
-                                            <option value="in">हिन्दी</option>
-                                            <option value="cn">বাংলা</option>
+                                            @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                                <option value="{{ $localeCode }}" @selected($localeCode == App::currentLocale())>{{ $properties['native'] }}</option>
+                                            @endforeach
                                         </select>
                                     </form>
                                 </div>
