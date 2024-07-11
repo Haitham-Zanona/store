@@ -10,9 +10,13 @@
 
 @section('content')
 
-<div class="mb-3">
-    <a href="{{ route('categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+<div class="mb-5">
+    {{-- @if (Auth::user()->can('categories.create') --}}
+    @can('categories.create')
 
+    <a href="{{ route('categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+@endcan
+    {{-- @endif --}}
     <a href="{{ route('categories.trash') }}" class="btn btn-sm btn-outline-dark">Trash</a>
 </div>
 
@@ -56,8 +60,10 @@
                         <td>{{ $category->created_at }}</td>
                         <td>
                             <!-- Button edit -->
+                            @can('categories.update')
                             <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
-                        </td>
+                            @endcan
+                            </td>
                         <td>
                             <!-- Form delete category-->
                             <form action="{{ route('categories.destroy', $category->id) }}" method="post">
