@@ -129,7 +129,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </li>
                 <!-- Notifications Dropdown Menu -->
-                {{-- <x-dashboard.notifications-menu count="7" /> --}}
+                <x-dashboard.notifications-menu count="7" />
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
