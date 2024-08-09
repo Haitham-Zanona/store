@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Jobs\ImportProducts;
 use App\Models\Tag;
 use App\Models\Product;
 use App\Models\Category;
@@ -16,6 +17,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Product::class);
+        // $this->authorize('view-any');
+
         $products = Product::with(['category', 'store'])->paginate();
         // SELECT * FROM products
         // SELECT * FROM categories WHERE id IN (..)
@@ -35,6 +39,8 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Product::class);
+
         $parents = Category::all();
         $product = new Product();
         return view('dashboard.products.create', compact('product', 'parents'));
@@ -45,7 +51,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('store', Product::class);
     }
 
     /**
@@ -53,7 +59,8 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $this->authorize('view', $product);
     }
 
     /**
@@ -62,6 +69,7 @@ class ProductsController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
+        $this->authorize('update', $product);
 
         $tags = implode(',', $product->tags()->pluck('name')->toArray());
 
@@ -73,6 +81,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request,Product $product)
     {
+        $this->authorize('update', $product);
         $product->update($request->except('tags'));
 
         $tags = json_decode($request->post('tags'));
@@ -102,6 +111,8 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $this->authorize('delete', $product);
     }
+
 }

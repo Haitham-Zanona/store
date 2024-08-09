@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Concerns\HasRoles;
 use App\Models\Profile;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +15,11 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasApiTokens,
+        HasFactory,
+        Notifiable,
+        TwoFactorAuthenticatable,
+        HasRoles;
 
     /**
      * The attributes that are mass assignable.

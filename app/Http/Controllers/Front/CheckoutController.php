@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Events\OrderCreated;
 use Throwable;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Events\OrderCreated;
+use App\Models\OrderAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\OrderAddress;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Cart\CartRepository;
 use Symfony\Component\Intl\Countries;
+use App\Exceptions\InvalidOrderException;
+use App\Repositories\Cart\CartRepository;
 
 class CheckoutController extends Controller
 {
     public function create(CartRepository $cart)
     {
         if ($cart->get()->count() == 0) {
-            return redirect()->route('home');
+            throw new InvalidOrderException('cart is empty');
         }
         return view('front.checkout', [
             'cart' => $cart,
