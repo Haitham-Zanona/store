@@ -11,7 +11,7 @@ class RolePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user)
+    public function viewAny($user)
     {
         return $user->hasAbility('roles.view');
     }

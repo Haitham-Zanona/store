@@ -11,6 +11,7 @@
         "laravel/framework": "^10.10",
         "laravel/octane": "^2.0",
         "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.15",
         "laravel/tinker": "^2.8",
         "mcamara/laravel-localization": "*",
         "pestphp/pest": "^2.6",

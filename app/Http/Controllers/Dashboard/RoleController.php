@@ -81,7 +81,7 @@ class RoleController extends Controller
         $role->updateWithAbilities($request);
 
         return redirect()
-        ->route('dashboard.roles.index')
+        ->route('roles.index')
         ->with('success','Role updated successfully');
 
     }
