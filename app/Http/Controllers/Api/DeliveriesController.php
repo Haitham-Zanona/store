@@ -34,7 +34,7 @@ class DeliveriesController extends Controller
             'current_location' => DB::raw("POINT($request->lng), ($request->lat)"),
         ]);
 
-        event(new DeliveryLocationUpdated($request->lng, $request->lat));
+        event(new DeliveryLocationUpdated($delivery, $request->lng, $request->lat));
 
         return $delivery;
     }

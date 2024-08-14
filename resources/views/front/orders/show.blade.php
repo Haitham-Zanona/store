@@ -40,15 +40,11 @@
             cluster: 'ap2'
         });
 
-        var channel = pusher.subscribe('deliveries');
+        var channel = pusher.subscribe('private-deliveries.{{ $order_id }}');
         channel.bind('location-updated', function(data) {
-            const marker = new AdvancedMarkerElement({
-                map: map,
-                position: {
+            marker.setPosition({
                 lat: Number("{{ data.lat }}"),
                 lng: Number("{{ data.lng }}")
-            },
-                title: "Uluru",
             });
         });
     </script>
