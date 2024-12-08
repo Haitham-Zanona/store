@@ -1,19 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SocialController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\Front\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\Front\currencyConverterController;
 use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\Front\OrdersController;
-use App\Http\Controllers\front\ProductController;
-use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\PaymentsController;
-use App\Http\Controllers\Auth\SocialLoginController;
-use App\Http\Controllers\Front\currencyConverterController;
+use App\Http\Controllers\front\ProductController;
+use App\Http\Controllers\SocialController;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-use App\Http\Controllers\Front\Auth\TwoFactorAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ use App\Http\Controllers\Front\Auth\TwoFactorAuthenticationController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -36,6 +36,15 @@ Route::group([
 
     Route::get('/product', [ProductController::class, 'index'])
         ->name('product.index');
+
+    Route::get('/get-products', function (Request $request) {
+        $category = $request->query('category');
+        $products = $category === 'all'
+        ? Product::all()
+        : Product::where('category', $category)->get();
+
+        return response()->json(['products' => $products]);
+    });
 
     Route::get('/products/{product:slug}', [ProductController::class, 'show'])
         ->name('product.show');
@@ -71,12 +80,16 @@ Route::get('orders/{order}/pay', [PaymentsController::class, 'create'])
 Route::get('/orders/{order}', [OrdersController::class, 'show'])
     ->name('orders.show');
 
+Route::post('orders/{order}/stripe/payment-intent', [PaymentsController::class, 'createStripePaymentIntent'])
+    ->name('stripe.paymentIntent.create');
+
+Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])
+    ->name('stripe.return');
+
+// Route::any('stripe/webhook', [StripeWebhooksController::class, 'handle']);
+
 //at Laravel -v  7 or less
 // Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index');
-
-
-
-
 
 // require __DIR__.'/auth.php';
 

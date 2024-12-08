@@ -16,6 +16,7 @@
         "mcamara/laravel-localization": "*",
         "pusher/pusher-php-server": "^7.2",
         "ramsey/uuid": "^4.7",
+        "stripe/stripe-php": "^16.3",
         "symfony/intl": "^6.3",
         "vlucas/phpdotenv": "^5.5",
         "voku/portable-ascii": "^2.0"
